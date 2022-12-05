@@ -30,131 +30,14 @@
 
 Рисунок 24.2 Раставили линии и сделали коллайдеры на Circle
 
-Листинг 24.1 Player.cs
-using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
-public class Player : MonoBehaviour
-{
-    public Vector2 jumpForce;
-    Vector2 currentVelocity;
-    Rigidbody2D rgbd;
-    GameManager gameManager;
-    ScoreUI scoreUI;
+[![image.png](https://i.postimg.cc/HL3TjyTY/image.png)](https://postimg.cc/Z99GM092)
 
-    void Start()
-    {
-        rgbd = GetComponent<Rigidbody2D>();
-        rgbd.gravityScale = 0;
-        gameManager = FindObjectOfType<GameManager>();
-        scoreUI = FindObjectOfType<ScoreUI>();
-    }
-    void Update()
-    {
-        if (gameManager.gameOver) { rgbd.bodyType = RigidbodyType2D.Static;return; }
-        if (Input.GetMouseButtonDown(0))
-        {
-            if (rgbd.gravityScale != 0.5f) { rgbd.gravityScale = 0.5f; }
-            rgbd.AddForce(jumpForce);
-            SpeedController();
-            scoreUI.IncrementScore(1);
-        }
-    }
-    void SpeedController()
-    {
-        currentVelocity = rgbd.velocity;
-        currentVelocity.x = Mathf.Clamp(currentVelocity.x, 2, 2);
-        currentVelocity.y = Mathf.Clamp(currentVelocity.y, 2, 2);
-        rgbd.velocity = currentVelocity;
-    }
-}
-
-Листинг 24.2 CameraController.cs
-using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
-
-public class CameraController : MonoBehaviour
-{
-    public Transform playerTransform;
-    void Start()
-    {
+     Рисунок 24.2 - скрипт player
         
-    }
+# ![Screenshot-13.png](https://i.postimg.cc/K8DDRWQf/Screenshot-13.png)
 
-    void Update()
-    {
-        transform.position = new Vector3(playerTransform.position.x, transform.position.y, -10);
-    }
-}
+     Рисунок 24.3 Раставляем линии и делаем коллайдеры на Circle
 
-Листинг 24.3 Block.cs
-using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+# ![Screenshot-14.png](https://i.postimg.cc/FHp09Lsn/Screenshot-14.png)
 
-public class Block : MonoBehaviour
-{
-    public void OnTriggerEnter2D(Collider2D collision)
-    {
-        if(collision.tag == "Player")
-        {
-            Debug.Log("hit by player");
-            FindObjectOfType<GameManager>().gameOver = true;
-        }
-    }
-}
-
-Листинг 24.4 Diamond.cs
-using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
-
-public class Diamond : MonoBehaviour
-{
-    public void OnTriggerEnter2D(Collider2D collision)
-    {
-        if(collision.tag == "Player")
-        {
-            //add points
-            FindObjectOfType<ScoreUI>().IncrementDiamond(1);
-            FindObjectOfType<ScorePointCanvas>().DiamondHit(collision.transform.position);
-            Destroy(gameObject);
-        }
-    }
-}
-
-
-Листинг 24.5 ScoreUI.cs
-using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
-
-public class ScoreUI : MonoBehaviour
-{
-    int Score,Diamond;
-    public TMPro.TextMeshProUGUI ScoreText;
-    public TMPro.TextMeshProUGUI DiamondText;
-
-    public void IncrementScore( int value)
-    {
-        Score += value;
-        UpdateDisplay();
-    }
-
-    public void IncrementDiamond(int value)
-    {
-        Diamond += value;
-        UpdateDisplay();
-    }
-
-    private void UpdateDisplay()
-    {
-        ScoreText.text = Score.ToString();
-        DiamondText.text = Diamond.ToString();
-    }
-}
-
-2.Вывод:
-В ходе проделанной работы, мы разработали игру Circle.
-
+      Рисунок 24.4 - игра
